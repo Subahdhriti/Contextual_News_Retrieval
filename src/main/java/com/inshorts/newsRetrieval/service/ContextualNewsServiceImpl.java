@@ -35,9 +35,10 @@ public class ContextualNewsServiceImpl implements ContextualNewsService{
     }
 
     public List<NewsArticle> searchArticles(String query) {
-        return repo.searchByText(query).stream()
+        List<NewsArticle> articles = repo.searchByText(query).stream()
                 .sorted(Comparator.comparingDouble(NewsArticle::getRelevance_score).reversed())
                 .toList();
+        return addLLMSummary(articles);
     }
 
     public List<NewsArticle> getBySource(String source) {
@@ -56,7 +57,8 @@ public class ContextualNewsServiceImpl implements ContextualNewsService{
     }
 
     /**
-     * This function is to add LLM summary to the news articles
+     * This function is to add LLM summary to the news articles.
+     * Completable future is used generate summaries asynchronously.
      * @param articles The list of news articles fetched from DB
      * @return The list of news articles fetched from DB, summary will be added if service is able to get
      * LLM summary, otherwise empty string
