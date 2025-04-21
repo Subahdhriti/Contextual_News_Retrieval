@@ -41,8 +41,8 @@ public class ContextualNewsControllerV1 {
     public List<NewsArticle> getNearbyArticles(
             @RequestParam double lat,
             @RequestParam double lon,
-            @RequestParam(defaultValue = "10.0") double radiusKm
+            @RequestParam(defaultValue = "10.0") double radiusInKm
     ) {
-        return newsService.getNearbyArticles(lat, lon, radiusKm);
+        return newsService.getNearbyArticles(lat, lon, radiusInKm);
     }
 }
