@@ -13,7 +13,7 @@ public interface ContextualNewsRepository extends MongoRepository<NewsArticle, S
 
     List<NewsArticle> findByRelevanceScoreGreaterThanOrderByRelevanceScoreDesc(double threshold);
 
-    List<NewsArticle> findBySourceNameOrderByPublicationDateDesc(String sourceName);
+    List<NewsArticle> findByTitleOrderByPublicationDateDesc(String sourceName);
 
     @Query("{ $or: [ { title: { $regex: ?0, $options: 'i' } }, { description: { $regex: ?0, $options: 'i' } } ] }")
     List<NewsArticle> searchByText(String query);
